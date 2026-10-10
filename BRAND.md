@@ -153,9 +153,14 @@ Rules:
   (3.5:1 dark, 3.2:1 light), for captions and labels only, and light-theme regenerable
   `#0b8a57` (4.0:1), for chips, dots and bold labels, not paragraphs.
 
-> Terminal note: the CLI's ANSI output currently colors `regenerable_expensive` cyan and
-> `review` yellow, so it doesn't yet match the brand mapping above. Terminal art in this repo
-> shows the real output as-is.
+> Terminal note: since cli v0.3.0 the CLI colors tiers with this palette: regenerable GFP
+> mint, expensive amber, review DAPI blue-violet. Truecolor terminals (`COLORTERM=truecolor`
+> or `24bit`) get the exact hex; 256-color terminals get the nearest xterm color (dark 121 /
+> 215 / 111, light 29 / 130 / 62); anything else falls back to ANSI green / yellow / bright
+> blue, which follow the terminal's own palette. The light hues are used when
+> `LYSOSOME_THEME=light` is set or `COLORFGBG` reports a light background (`LYSOSOME_THEME=dark`
+> forces the dark ones); dark is the default. `NO_COLOR`, `--no-color` and non-TTY output are
+> plain. The terminal art in this repo is real truecolor output, captured once per theme.
 
 ## Typography
 
