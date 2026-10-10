@@ -14,7 +14,7 @@ const cmd = opt("--cmd", "");
 const title = opt("--title", "lysosome");
 const themeName = opt("--theme", "dark");
 
-// Brand terminal themes (tokens/tokens.json). ANSI colors map to the nearest brand stain.
+// Brand terminal themes (tokens/tokens.json). Basic ANSI colors map to the nearest brand stain.
 const THEMES = {
   dark: { bg: "#0b0812", bar: "#1a1526", line: "#2e2643", ink: "#eee8f7", faint: "#6f6585", muted: "#a99fbd",
     ansi: { 31: "#ff4d7e", 32: "#6ef0b0", 33: "#ffc15e", 34: "#92a9ff", 35: "#e08cff", 36: "#7fe3ef", 37: "#eee8f7", 90: "#6f6585" } },
@@ -22,6 +22,15 @@ const THEMES = {
     ansi: { 31: "#d11d54", 32: "#0b8a57", 33: "#a35f00", 34: "#3a57d1", 35: "#9a2fc4", 36: "#0b7c8a", 37: "#1b1426", 90: "#8d84a0" } },
 };
 const T = THEMES[themeName];
+
+// 24-bit (38;2;r;g;b) colors render exactly; xterm-256 (38;5;n) via the standard cube/ramp.
+const hex = (r, g, b) => "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
+const xterm = (n) => {
+  if (n < 8) return T.ansi[30 + n];
+  if (n < 16) return T.ansi[90 + n - 8] ?? T.ansi[30 + n - 8];
+  if (n < 232) { const L = [0, 95, 135, 175, 215, 255], i = n - 16; return hex(L[Math.floor(i / 36)], L[Math.floor(i / 6) % 6], L[i % 6]); }
+  const v = 8 + (n - 232) * 10; return hex(v, v, v);
+};
 
 const FS = 14, CW = FS * 0.6, LH = 22, PADX = 24, PADT = 62, PADB = 26;
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -43,8 +52,11 @@ const parsed = lines.map((line) => {
     last = re.lastIndex;
     const codes = m[1] === "" ? [0] : m[1].split(";").map(Number);
     st = { ...st };
-    for (const c of codes) {
-      if (c === 0) st = { b: false, d: false, i: false, u: false, fg: null };
+    for (let k = 0; k < codes.length; k++) {
+      const c = codes[k];
+      if (c === 38 && codes[k + 1] === 2) { st.fg = hex(codes[k + 2], codes[k + 3], codes[k + 4]); k += 4; }
+      else if (c === 38 && codes[k + 1] === 5) { st.fg = xterm(codes[k + 2]); k += 2; }
+      else if (c === 0) st = { b: false, d: false, i: false, u: false, fg: null };
       else if (c === 1) st.b = true;
       else if (c === 2) st.d = true;
       else if (c === 3) st.i = true;
@@ -53,7 +65,8 @@ const parsed = lines.map((line) => {
       else if (c === 23) st.i = false;
       else if (c === 24) st.u = false;
       else if (c === 39) st.fg = null;
-      else if ((c >= 30 && c <= 37) || c === 90) st.fg = c;
+      else if (c >= 30 && c <= 37) st.fg = T.ansi[c];
+      else if (c >= 90 && c <= 97) st.fg = T.ansi[c] ?? T.ansi[c - 60];
     }
   }
   push(line.slice(last));
@@ -79,18 +92,17 @@ for (const runs of parsed) {
   let col = 0;
   for (const r of runs) {
     const chars = [...r.text];
-    // leading spaces need no element; trailing spaces neither
-    const lead = r.text.match(/^ */)[0].length;
-    const s = r.text.trim();
-    if (s) {
-      let a = "";
-      if (r.fg) a += ` fill="${T.ansi[r.fg]}"`;
-      else if (r.d) a += ` fill="${T.faint}"`;
-      if (r.fg && r.d) a += ` fill-opacity="0.7"`;
-      if (r.b) a += ` font-weight="700"`;
-      if (r.i) a += ` font-style="italic"`;
-      if (r.u) a += ` text-decoration="underline"`;
-      body += text(PADX + (col + lead) * CW, s, a);
+    // one element per cell: renderers collapse runs of spaces inside <text>, which would
+    // squeeze a multi-column run and then stretch it to textLength
+    let a = "";
+    if (r.fg) a += ` fill="${r.fg}"`;
+    else if (r.d) a += ` fill="${T.faint}"`;
+    if (r.fg && r.d) a += ` fill-opacity="0.7"`;
+    if (r.b) a += ` font-weight="700"`;
+    if (r.i) a += ` font-style="italic"`;
+    if (r.u) a += ` text-decoration="underline"`;
+    for (const m of r.text.matchAll(/\S+(?: \S+)*/g)) {
+      body += text(PADX + (col + [...r.text.slice(0, m.index)].length) * CW, m[0], a);
     }
     col += chars.length;
   }
