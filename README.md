@@ -73,8 +73,9 @@ Real `lysosome scan` output, captured from a synthetic demo tree
 
 <img src="terminal/scan-dark.svg" width="720" alt="lysosome scan output">
 
-`scan-dark.svg` / `scan-light.svg` (short), `scan-full-*.svg` (with the suggested cleanup
-commands), and PNGs at 2×.
+`scan-hero-*.svg` (summary + worktrees, for README headers), `scan-*.svg` (worktrees +
+projects), `scan-full-*.svg` (with the suggested cleanup commands), each in dark and light,
+plus PNGs at 2×.
 
 ## Tokens
 

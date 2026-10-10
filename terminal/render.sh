@@ -11,8 +11,11 @@ H="$dir/home"
 LC_ALL=C perl -pe "s#\Q$H\E#/Users/dev#g; s/\r\$//; s/[\x04\x08]//g" "$dir/scan.raw" | perl -0pe 's/\A\^D\n?//; s/\^D\s*\z/\n/' > "$here/scan.ansi"
 # short version for READMEs: drop the copy-paste cleanup commands block
 awk '/Suggested cleanup/{skip=1} skip&&/Removing a worktree keeps/{skip=0; getline; next} !skip' "$here/scan.ansi" > "$here/scan-short.ansi"
+# hero version: summary + worktrees only (drops the project section), keeps the closing line
+awk '/Project build & dependency output/{skip=1} /^ *.*Scanned [0-9]+ folders/{skip=0} !skip' "$here/scan-short.ansi" > "$here/scan-hero.ansi"
 cmd="lysosome scan ~/code ~/.worktrees --no-system"; title="example output · synthetic demo"
 for t in dark light; do
   node "$here/../scripts/ansi-to-svg.mjs" "$here/scan.ansi" "$here/scan-full-$t.svg" --cmd "$cmd" --title "$title" --theme $t
   node "$here/../scripts/ansi-to-svg.mjs" "$here/scan-short.ansi" "$here/scan-$t.svg" --cmd "$cmd" --title "$title" --theme $t
+  node "$here/../scripts/ansi-to-svg.mjs" "$here/scan-hero.ansi" "$here/scan-hero-$t.svg" --cmd "$cmd" --title "$title" --theme $t
 done
