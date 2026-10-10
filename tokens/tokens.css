@@ -1,0 +1,98 @@
+/* lysosome design tokens. GENERATED from tokens/tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* Dark is the default theme; light follows prefers-color-scheme unless [data-theme] pins one. */
+:root {
+  --ly-color-bg: #110d1a;
+  --ly-color-bg-deep: #0b0812;
+  --ly-color-surface: #1a1526;
+  --ly-color-surface-2: #221b31;
+  --ly-color-line: #2e2643;
+  --ly-color-ink: #eee8f7;
+  --ly-color-muted: #a99fbd;
+  --ly-color-faint: #6f6585;
+  --ly-color-stain: #ff4d7e;
+  --ly-color-stain-ink: #1a0610;
+  --ly-color-tier-regenerable: #6ef0b0;
+  --ly-color-tier-expensive: #ffc15e;
+  --ly-color-tier-review: #92a9ff;
+  --ly-glow: 0.55;
+  --ly-font-family-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --ly-font-family-body: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ly-font-family-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ly-font-weight-regular: 400;
+  --ly-font-weight-semibold: 600;
+  --ly-font-weight-wordmark: 650;
+  --ly-font-weight-display: 700;
+  --ly-font-stretch-display: 82%;
+  --ly-font-stretch-wordmark: 88%;
+  --ly-font-size-display: clamp(2.7rem, 7vw, 5.6rem);
+  --ly-font-size-h2: clamp(2rem, 4.2vw, 3.3rem);
+  --ly-font-size-h3: 1.45rem;
+  --ly-font-size-wordmark: 1.32rem;
+  --ly-font-size-lede: clamp(1.06rem, 1.4vw, 1.2rem);
+  --ly-font-size-body: 1.0625rem;
+  --ly-font-size-small: 0.9rem;
+  --ly-font-size-eyebrow: 0.78rem;
+  --ly-font-size-fine: 0.74rem;
+  --ly-font-letter-spacing-display: -0.028em;
+  --ly-font-letter-spacing-wordmark: -0.03em;
+  --ly-font-letter-spacing-eyebrow: 0.04em;
+  --ly-font-line-height-display: 0.98;
+  --ly-font-line-height-body: 1.6;
+  --ly-radius-xs: 6px;
+  --ly-radius-sm: 10px;
+  --ly-radius-md: 14px;
+  --ly-radius-lg: 18px;
+  --ly-radius-pill: 999px;
+  --ly-space-1: 4px;
+  --ly-space-2: 8px;
+  --ly-space-3: 12px;
+  --ly-space-4: 16px;
+  --ly-space-5: 24px;
+  --ly-space-6: 32px;
+  --ly-space-7: 48px;
+  --ly-space-8: 64px;
+  --ly-space-gutter: clamp(16px, 4vw, 40px);
+  --ly-space-max: 1180px;
+  --ly-shadow-panel: 0px 30px 80px -40px #00000099;
+  --ly-shadow-float: 0px 24px 60px -24px #0000008c;
+  --ly-shadow-glow-stain: 0px 0px 32px 0px #ff4d7e8c;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ly-color-bg: #f6f3fa;
+    --ly-color-bg-deep: #ece6f3;
+    --ly-color-surface: #ffffff;
+    --ly-color-surface-2: #f3eef9;
+    --ly-color-line: #e1d9ec;
+    --ly-color-ink: #1b1426;
+    --ly-color-muted: #5f5573;
+    --ly-color-faint: #8d84a0;
+    --ly-color-stain: #d11d54;
+    --ly-color-stain-ink: #ffffff;
+    --ly-color-tier-regenerable: #0b8a57;
+    --ly-color-tier-expensive: #a35f00;
+    --ly-color-tier-review: #3a57d1;
+    --ly-glow: 0.2;
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --ly-color-bg: #f6f3fa;
+  --ly-color-bg-deep: #ece6f3;
+  --ly-color-surface: #ffffff;
+  --ly-color-surface-2: #f3eef9;
+  --ly-color-line: #e1d9ec;
+  --ly-color-ink: #1b1426;
+  --ly-color-muted: #5f5573;
+  --ly-color-faint: #8d84a0;
+  --ly-color-stain: #d11d54;
+  --ly-color-stain-ink: #ffffff;
+  --ly-color-tier-regenerable: #0b8a57;
+  --ly-color-tier-expensive: #a35f00;
+  --ly-color-tier-review: #3a57d1;
+  --ly-glow: 0.2;
+  color-scheme: light;
+}

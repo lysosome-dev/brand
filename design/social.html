@@ -1,0 +1,137 @@
+<!doctype html>
+<!-- Source for social/*.png. Render: npm run render (scripts/render-social.mjs).
+     Variant via query string: ?v=repo&repo=cli | ?v=banner&theme=dark|light | ?v=x-header | ?v=og -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+@font-face { font-family: "Bricolage Grotesque"; src: url("../fonts/bricolage-grotesque-latin.woff2") format("woff2"); font-weight: 200 800; font-stretch: 75% 100%; }
+@font-face { font-family: "Instrument Sans"; src: url("../fonts/instrument-sans-latin.woff2") format("woff2"); font-weight: 400 700; font-stretch: 75% 100%; }
+@font-face { font-family: "JetBrains Mono"; src: url("../fonts/jetbrains-mono-latin.woff2") format("woff2"); font-weight: 400 800; }
+* { box-sizing: border-box; margin: 0; }
+:root { --stain: var(--ly-color-stain); --regen: var(--ly-color-tier-regenerable); --exp: var(--ly-color-tier-expensive); --review: var(--ly-color-tier-review); }
+html, body { background: var(--ly-color-bg); }
+body { color: var(--ly-color-ink); font-family: var(--ly-font-family-body); position: relative; overflow: hidden; }
+.hide { display: none !important; }
+
+/* the slide: microscope field with the organelle */
+.field { position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--ly-color-surface) 70%, var(--ly-color-bg)) 0 40%, var(--ly-color-bg-deep) 100%);
+  box-shadow: inset 0 0 0 1px var(--ly-color-line); }
+.mem { position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  border-radius: 48% 52% 55% 45% / 50% 44% 56% 50%; border: 3px solid var(--stain);
+  background: radial-gradient(circle at 38% 34%, color-mix(in srgb, var(--stain) 28%, transparent), transparent 60%),
+              radial-gradient(circle, color-mix(in srgb, var(--stain) 10%, var(--ly-color-bg)) 0 55%, color-mix(in srgb, var(--stain) 24%, var(--ly-color-bg)) 100%);
+  box-shadow: 0 0 60px color-mix(in srgb, var(--stain) calc(var(--ly-glow) * 90%), transparent), inset 0 0 40px color-mix(in srgb, var(--stain) calc(var(--ly-glow) * 55%), transparent); }
+.p { position: absolute; font: 500 17px var(--ly-font-family-mono); padding: 5px 13px; border-radius: 99px; border: 1.5px solid currentColor; white-space: nowrap;
+  background: var(--ly-color-bg-deep); box-shadow: 0 0 16px color-mix(in srgb, currentColor calc(var(--ly-glow) * 100%), transparent); }
+.g { color: var(--regen) } .a { color: var(--exp) } .b { color: var(--review) } .s { color: var(--stain) }
+
+.mark { display: flex; align-items: center; gap: 14px; font: 650 34px var(--ly-font-family-display); font-stretch: 88%; letter-spacing: -0.03em; }
+.mark svg { width: 44px; height: 44px; }
+.mark .repo { font: 500 26px var(--ly-font-family-mono); letter-spacing: 0; color: var(--ly-color-muted); margin-left: -4px; }
+h1 { font: 700 84px/0.95 var(--ly-font-family-display); font-stretch: 82%; letter-spacing: -0.03em; text-wrap: balance; }
+.sub { font-size: 25px; line-height: 1.4; color: var(--ly-color-muted); max-width: 28em; }
+.cmd { font: 500 21px var(--ly-font-family-mono); display: inline-flex; gap: 12px; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--ly-color-line); background: var(--ly-color-surface); }
+.cmd i { font-style: normal; color: var(--ly-color-faint); }
+.foot { font: 500 17px var(--ly-font-family-mono); color: var(--ly-color-faint); }
+.foot b { color: var(--stain); font-weight: 500; }
+
+/* ---------- repo social preview 1280x640 (GitHub crops ~40px edges in some views) */
+.v-repo { width: 1280px; height: 640px; }
+.v-repo .field { width: 660px; height: 660px; right: -150px; top: 50%; translate: 0 -50%; }
+.v-repo .mem { width: 300px; height: 300px; }
+.v-repo .copy { position: absolute; left: 80px; top: 72px; width: 720px; display: grid; gap: 0; }
+.v-repo h1 { margin-top: 70px; }
+.v-repo .sub { margin-top: 26px; }
+.v-repo .cmd { margin-top: 38px; justify-self: start; }
+.v-repo .foot { position: absolute; left: 80px; bottom: 54px; }
+
+/* ---------- org banner 1200x300 (rendered @2x) */
+.v-banner { width: 1200px; height: 300px; }
+.v-banner .field { width: 560px; height: 560px; right: -60px; top: 50%; translate: 0 -50%; }
+.v-banner .mem { width: 210px; height: 210px; }
+.v-banner .p { font-size: 14px; padding: 4px 11px; }
+.v-banner .copy { position: absolute; left: 56px; top: 50%; translate: 0 -50%; width: 700px; }
+.v-banner h1 { font-size: 58px; margin-top: 22px; }
+.v-banner .sub { font-size: 19px; margin-top: 14px; }
+.v-banner .mark { font-size: 28px; } .v-banner .mark svg { width: 36px; height: 36px; }
+
+/* ---------- X header 1500x500: avatar overlaps bottom-left ~ (0-400, 380-500); UI crops top/bottom on mobile */
+.v-x { width: 1500px; height: 500px; }
+.v-x .field { width: 720px; height: 720px; right: -40px; top: 50%; translate: 0 -50%; }
+.v-x .mem { width: 270px; height: 270px; }
+.v-x .copy { position: absolute; left: 440px; top: 50%; translate: -50% -50%; left: 470px; width: 760px; text-align: left; }
+.v-x h1 { font-size: 76px; }
+.v-x .sub { margin-top: 18px; font-size: 23px; }
+
+/* ---------- OG 1200x630 */
+.v-og { width: 1200px; height: 630px; }
+.v-og .field { width: 640px; height: 640px; right: -120px; top: 50%; translate: 0 -50%; }
+.v-og .mem { width: 300px; height: 300px; }
+.v-og .copy { position: absolute; left: 72px; top: 70px; width: 640px; }
+.v-og h1 { margin-top: 64px; font-size: 92px; }
+.v-og .out { margin-top: 44px; font: 500 21px/1.6 var(--ly-font-family-mono); }
+.v-og .out .dim { color: var(--ly-color-faint); font-size: 16px; margin-top: 6px; }
+</style></head><body>
+<div class="field"><div class="mem"></div><div class="pills"></div></div>
+<div class="copy">
+  <div class="mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.2c6.4-.3 12.6 4.6 12.8 11.6.2 7.4-5.3 13.9-12.6 14-7.2.1-13.1-5.9-13-13C3.3 8.9 9.4 3.5 16 3.2Z" style="fill:var(--stain);fill-opacity:.16;stroke:var(--stain);stroke-width:2.2"/><circle cx="12.4" cy="13" r="3" style="fill:var(--regen)"/><circle cx="19.6" cy="11.6" r="2.1" style="fill:var(--exp)"/><circle cx="17.6" cy="20.2" r="2.6" style="fill:var(--review)"/></svg><span>lysosome</span><span class="repo"></span></div>
+  <h1></h1>
+  <p class="sub"></p>
+  <div class="cmd"><i>$</i><span></span></div>
+  <div class="out"></div>
+</div>
+<div class="foot"></div>
+<script>
+const q = new URLSearchParams(location.search);
+const v = q.get("v") || "repo";
+if (q.get("theme") === "light") document.documentElement.dataset.theme = "light";
+else document.documentElement.dataset.theme = "dark";
+const $ = (s) => document.querySelector(s);
+const REPOS = {
+  cli: { repo: "/cli", h1: "Digest what your agents leave behind.",
+    sub: "Open-source Rust CLI that finds dormant git worktrees, build output, caches and AI models, and reclaims them safely.",
+    cmd: "brew install lysosome-dev/tap/lysosome",
+    pills: [["g", "wt/checkout-v2", 120, 150], ["a", "node_modules", 330, 112], ["g", "target/", 245, 300], ["a", "llama3.1:70b", 72, 392], ["b", "wt/spike · dirty", 250, 482]] },
+  "homebrew-tap": { repo: "/homebrew-tap", h1: "brew install, then reclaim your disk.",
+    sub: "The Homebrew tap for the lysosome CLI. Ships man pages and bash, zsh and fish completions.",
+    cmd: "brew install lysosome-dev/tap/lysosome",
+    pills: [["g", "DerivedData", 120, 150], ["a", "~/.cargo", 350, 120], ["g", ".next", 270, 300], ["a", "Pods", 90, 392], ["b", "docker volumes", 230, 482]] },
+  brand: { repo: "/brand", h1: "One organelle, three stains.",
+    sub: "Logo, design tokens, social art and guidelines for lysosome. Assets CC BY 4.0, scripts MIT.",
+    cmd: "tokens/tokens.json",
+    pills: [["s", "stain #ff4d7e", 96, 150], ["g", "regenerable", 340, 112], ["a", "expensive", 250, 300], ["b", "review", 80, 392], ["g", "tokens.css", 260, 482]] },
+  org: { repo: "", h1: "The disk cleaner for the agentic coding era.",
+    sub: "Find and safely reclaim the disk your dev tools and coding agents leave behind.",
+    cmd: "brew install lysosome-dev/tap/lysosome",
+    pills: [["g", "wt/checkout-v2", 120, 150], ["a", "node_modules", 330, 112], ["g", "DerivedData", 245, 300], ["a", "llama3.1:70b", 72, 392], ["b", "wt/spike · dirty", 250, 482]] },
+};
+function pills(list, scale = 1, dx = 0, dy = 0) {
+  $(".pills").innerHTML = list.map(([c, t, x, y]) => `<span class="p ${c}" style="left:${x * scale + dx}px;top:${y * scale + dy}px">${t}</span>`).join("");
+}
+document.body.className = "v-" + (v === "x-header" ? "x" : v);
+if (v === "repo") {
+  const r = REPOS[q.get("repo") || "org"];
+  $(".repo").textContent = r.repo; $("h1").textContent = r.h1; $(".sub").textContent = r.sub; $(".cmd span").textContent = r.cmd;
+  if (r.cmd.startsWith("tokens")) $(".cmd i").textContent = "{}";
+  $(".foot").innerHTML = "<b>lysosome.dev</b> · github.com/lysosome-dev" + r.repo;
+  $(".out").classList.add("hide");
+  pills(r.pills, 1.03, 10, 10);
+} else if (v === "banner") {
+  $("h1").textContent = "The disk cleaner for the agentic coding era.";
+  $(".sub").textContent = "Dormant worktrees, build output, caches, AI models. Found, labeled, reclaimed safely.";
+  [".cmd", ".out", ".foot", ".repo"].forEach((s) => $(s).classList.add("hide"));
+  pills([["g", "wt/checkout-v2", 30, 165], ["a", "node_modules", 335, 150], ["b", "wt/spike · dirty", 70, 365], ["a", "llama3.1:70b", 330, 378]], 1, 0, 0);
+} else if (v === "x-header") {
+  $("h1").textContent = "Digest what your agents leave behind.";
+  $(".sub").textContent = "The disk cleaner for the agentic coding era · lysosome.dev";
+  [".cmd", ".out", ".foot", ".mark"].forEach((s) => $(s).classList.add("hide"));
+  pills([["g", "wt/checkout-v2", 120, 170], ["a", "node_modules", 360, 130], ["g", "DerivedData", 250, 330], ["a", "llama3.1:70b", 80, 420], ["b", "wt/spike · dirty", 280, 520]]);
+} else if (v === "og") {
+  $("h1").textContent = "Digest what your agents leave behind.";
+  [".cmd", ".sub", ".foot", ".repo"].forEach((s) => $(s).classList.add("hide"));
+  $(".out").innerHTML = '<div>23 dormant worktrees · 41.2 GB</div><div style="color:var(--regen)">18.6 GB safe to remove now</div><div class="dim">example output · lysosome.dev</div>';
+  pills([["g", "DerivedData", 120, 150], ["a", "node_modules", 330, 120], ["g", "wt/checkout-v2", 230, 300], ["a", "llama3.1:70b", 70, 390], ["b", "wt/spike · dirty", 250, 478]]);
+}
+</script>
+</body></html>

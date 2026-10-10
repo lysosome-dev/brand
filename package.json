@@ -1,0 +1,16 @@
+{
+  "name": "lysosome-brand",
+  "private": true,
+  "type": "module",
+  "description": "lysosome brand assets, design tokens and guidelines",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "tokens:check": "node scripts/build-tokens.mjs --check",
+    "logo": "python3 scripts/build_logo.py && scripts/export-png.sh",
+    "render": "node scripts/render-social.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.64.0"
+  }
+}

@@ -1,0 +1,47 @@
+  [1m4 projects[0m untouched for 30+ days are holding [1;4m6.5 GB[0m of dependencies and build output.
+
+    [32;1m11.5 GB[0m  reclaimable now         [2mREMOVABLE items in every section[0m
+    [32m 8.5 GB[0m  regenerable             [2mcheap to rebuild (build output, caches, merged worktrees)[0m
+    [36m 3.0 GB[0m  regenerable_expensive   [2mcostly to get back (dependencies to re-download)[0m
+    [33m 2.9 GB[0m  review                  [2ma human should look first[0m
+    [2mTier totals cover every idle item; each byte is counted once.[0m
+
+  [2m──[0m [1;4mGit worktrees[0m  [2m7.9 GB idle in 6 items of 6[0m
+
+  [1m6 dormant worktrees[0m [1mare[0m holding [1;4m7.9 GB[0m  [2mof 6 found · idle 30+ days[0m
+
+    [32;1m5.0 GB[0m  safe to remove now          [2m4 clean, merged or pushed[0m
+    [36;1m7.9 GB[0m  build & dependency output   [2mstrippable even from worktrees you keep[0m
+
+  [2mSTATUS       SIZE  ARTIFACTS  IDLE  BRANCH                   PATH[0m
+  [33;1mREVIEW   [0m  2.1 GB  [36m   2.1 GB[0m  [2m 65d[0m  agent/otel-traces        [2m~/.worktrees/api-server/[0motel-traces
+             [2;3m└ no remote and not merged[0m
+  [32;1mREMOVABLE[0m  [32m1.8 GB[0m  [36m   1.8 GB[0m  [2m 39d[0m  agent/rate-limits        [2m~/.worktrees/api-server/[0mrate-limits
+  [32;1mREMOVABLE[0m  [32m1.3 GB[0m  [36m   1.3 GB[0m  [2m 35d[0m  claude/refactor-db       [2m~/code/api-server/.claude/worktrees/[0mrefactor-db
+  [32;1mREMOVABLE[0m  [32m1.0 GB[0m  [36m   1.0 GB[0m  [2m 52d[0m  agent/checkout-v2        [2m~/.worktrees/shop-web/[0mcheckout-v2
+  [32;1mREMOVABLE[0m  [32m906 MB[0m  [36m   906 MB[0m  [2m 44d[0m  agent/fix-cart-rounding  [2m~/.worktrees/shop-web/[0mfix-cart-rounding
+  [33;1mREVIEW   [0m  822 MB  [36m   822 MB[0m  [2m 69d[0m  agent/spike-auth         [2m~/.worktrees/shop-web/[0mspike-auth
+             [2;3m└ 1 uncommitted change[0m
+
+  [1mSuggested cleanup for REMOVABLE worktrees[0m  [2mreview, then run yourself[0m
+    [2mgit[0m [2m-C[0m "/Users/dev/code/api-server" [2mworktree[0m [2mremove[0m "/Users/dev/.worktrees/api-server/rate-limits"
+    [2mgit[0m [2m-C[0m "/Users/dev/code/api-server" [2mworktree[0m [2mremove[0m "/Users/dev/code/api-server/.claude/worktrees/refactor-db"
+    [2mgit[0m [2m-C[0m "/Users/dev/code/shop-web" [2mworktree[0m [2mremove[0m "/Users/dev/.worktrees/shop-web/checkout-v2"
+    [2mgit[0m [2m-C[0m "/Users/dev/code/shop-web" [2mworktree[0m [2mremove[0m "/Users/dev/.worktrees/shop-web/fix-cart-rounding"
+    [2mRemoving a worktree keeps its branch; delete merged branches with `git branch -d`.[0m
+
+  [2m──[0m [1;4mProject build & dependency output[0m  [2m6.5 GB idle in 6 items of 7[0m
+
+    [2mSTATUS     TIER      SIZE  IDLE  KIND          PATH[0m
+  [1m~/code/api-server[0m  [2m2.6 GB · idle 35d[0m
+    [32;1mREMOVABLE[0m  [32mcheap [0m  2.6 GB  [2m 35d[0m  target        target
+  [1m~/code/ml-notebooks[0m  [2m1.5 GB · idle 139d[0m
+    [32;1mREMOVABLE[0m  [36mcostly[0m  1.5 GB  [2m139d[0m  .venv         .venv
+  [1m~/code/shop-web[0m  [2m1.3 GB · idle 94d[0m
+    [32;1mREMOVABLE[0m  [36mcostly[0m  1.0 GB  [2m 94d[0m  node_modules  node_modules
+    [32;1mREMOVABLE[0m  [32mcheap [0m  310 MB  [2m 94d[0m  .next         .next
+  [1m~/code/ios-app[0m  [2m1.1 GB · idle 47d[0m
+    [32;1mREMOVABLE[0m  [32mcheap [0m  604 MB  [2m 47d[0m  build         build
+    [32;1mREMOVABLE[0m  [36mcostly[0m  461 MB  [2m 47d[0m  Pods          Pods
+
+  [2mScanned 18 folders under ~/code, ~/.worktrees in 0.1s. Nothing was changed.[0m
