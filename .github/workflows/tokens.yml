@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: 22
       - name: tokens.css is generated from tokens.json
-        run: node scripts/build-tokens.mjs --check
+        run: scripts/verify
