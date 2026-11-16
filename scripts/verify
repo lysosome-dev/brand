@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Runs the same check as the tokens CI workflow: tokens.css must match tokens.json.
+# No network, no side effects. Needs Node 22+.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+command -v node >/dev/null || { echo "node is required (v22+)" >&2; exit 1; }
+echo "==> tokens.css is generated from tokens.json"
+node scripts/build-tokens.mjs --check
+echo "verify: ok"
